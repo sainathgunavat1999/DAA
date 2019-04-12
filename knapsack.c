@@ -1,5 +1,5 @@
 #include<stdio.h>
-float knapsack(int n,float capacity,float weight[],float profit[]);
+float knapsack(int n,float capacity,float weight[],float profit[],float ratio[]);
 void main()
 {
     float profit[10],weight[10],ratio[10],capacity,temp;
@@ -34,14 +34,14 @@ void main()
             }
         }
     }
-    temp=knapsack(n,capacity,weight,profit);
+    temp=knapsack(n,capacity,weight,profit,ratio);
     printf("\nMaximum profit is=%.2f",temp);
 }
 
-float knapsack(int n,float capacity,float weight[],float profit[])
+float knapsack(int n,float capacity,float weight[],float profit[],float ratio[])
 {
     int i;
-    float total_profit=0.0,u,x[10]={0.0};
+    float total_profit=0.0,u,x[10]={0.0},temp;
     u=capacity;
     for(i=0;i<n;i++)
     {
@@ -55,6 +55,19 @@ float knapsack(int n,float capacity,float weight[],float profit[])
             total_profit+=profit[i];
         }
         
+    }
+    if(u!=0)
+    {
+        for(i=0;i<n;i++)
+        {
+            if(x[i]!=1.0)
+            {
+                temp=u/weight[i];
+                printf("\n%d item of weight %.2f added to knapsack.",i+1,temp);
+                total_profit+=profit[i]*temp;
+            }
+            
+        }
     }
     return total_profit;
 }
